@@ -115,22 +115,18 @@ vim.opt.showmode = false
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
 vim.schedule(function()
-  if vim.fn.has 'mac' == 1 then
-    vim.opt.clipboard = 'unnamedplus'
-  else
-    vim.g.clipboard = {
-      name = 'wl-clipboard',
-      copy = {
-        ['+'] = 'wl-copy',
-        ['*'] = 'wl-copy',
-      },
-      paste = {
-        ['+'] = 'wl-paste',
-        ['*'] = 'wl-paste',
-      },
-      cache_enabled = 0,
-    }
-  end
+  vim.opt.clipboard = 'unnamedplus'
+  vim.g.clipboard = {
+    name = 'OSC 52',
+    copy = {
+      ['+'] = require('vim.ui.clipboard.osc52').copy '+',
+      ['*'] = require('vim.ui.clipboard.osc52').copy '*',
+    },
+    paste = {
+      ['+'] = require('vim.ui.clipboard.osc52').paste '+',
+      ['*'] = require('vim.ui.clipboard.osc52').paste '*',
+    },
+  }
 end)
 
 -- Enable break indent
