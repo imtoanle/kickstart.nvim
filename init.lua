@@ -135,7 +135,7 @@ end)
 vim.opt.breakindent = true
 
 -- Save undo history
-vim.opt.undofile = true
+vim.opt.undofile = false
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.opt.ignorecase = true
@@ -177,6 +177,7 @@ vim.opt.scrolloff = 10
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+vim.keymap.set('n', '<leader>i2', ':set tabstop=2 shiftwidth=2 expandtab<CR>:retab<CR>', { noremap = true, silent = true })
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
@@ -331,6 +332,7 @@ require('lazy').setup({
         { '<leader>d', group = '[D]ocument' },
         { '<leader>r', group = '[R]ename' },
         { '<leader>s', group = '[S]earch' },
+        { '<leader>i', group = '[I]ndent' },
         { '<leader>w', group = '[W]orkspace' },
         { '<leader>t', group = '[T]oggle' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
