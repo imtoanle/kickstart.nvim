@@ -115,18 +115,24 @@ vim.opt.showmode = false
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
 vim.schedule(function()
+  local is_tmux = function()
+    return os.getenv 'TMUX' ~= nil
+  end
+
+  if not is_tmux() then
+    vim.g.clipboard = {
+      name = 'OSC 52',
+      copy = {
+        ['+'] = require('vim.ui.clipboard.osc52').copy '+',
+        ['*'] = require('vim.ui.clipboard.osc52').copy '*',
+      },
+      paste = {
+        ['+'] = function() end,
+        ['*'] = function() end,
+      },
+    }
+  end
   vim.opt.clipboard = 'unnamedplus'
-  vim.g.clipboard = {
-    name = 'OSC 52',
-    copy = {
-      ['+'] = require('vim.ui.clipboard.osc52').copy '+',
-      ['*'] = require('vim.ui.clipboard.osc52').copy '*',
-    },
-    paste = {
-      ['+'] = function() end,
-      ['*'] = function() end,
-    },
-  }
 end)
 
 -- Enable break indent
